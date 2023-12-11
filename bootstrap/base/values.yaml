@@ -3,7 +3,7 @@ default:
     enabled: true
     enableAutoSync: true
     autoSyncPrune: false
-    project: default
+    project: cluster-config
     labels:
       app-source: base
       repo: cluster-config
@@ -13,6 +13,23 @@ default:
     source:
       repoURL: https://github.com/rh-bjeon/cluster-setting.git
       targetRevision: HEAD
+
+projects:
+
+  cluster-config:
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - https://github.com/rh-bjeon/cluster-setting
+    - https://github.com/redhat-cop/gitops-catalog
+    - https://github.com/gnunn-gitops/acm-hub-bootstrap
+    destinations: |
+      - namespace: '*'
+        name: in-cluster
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
 
 applications:
       
@@ -29,7 +46,6 @@ applications:
       argocd.argoproj.io/sync-wave: '21'
     destination:
       namespace: openshift-compliance
-      server: https://kubernetes.default.svc
     source:
       path: components/compliance-operator/overlays/cis-compliance
 
