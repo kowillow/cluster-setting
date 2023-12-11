@@ -9,9 +9,9 @@ default:
       repo: cluster-config
     destination:
       namespace: openshift-gitops
-      server: https://kubernetes.default.svc
+      name: local-cluster
     source:
-      repoURL: https://github.com/gnunn-gitops/cluster-config.git
+      repoURL: https://github.com/rh-bjeon/cluster-setting.git
       targetRevision: HEAD
 
 applications:
@@ -23,30 +23,6 @@ applications:
       namespace: cert-manager-operator
     source:
       path: components/cert-manager-operator/aggregate/overlays/letsencrypt
-
-  authentication:
-    annotations:
-      argocd.argoproj.io/sync-wave: '4'
-    destination:
-      namespace: openshift-config
-    source:
-      path: components/oauth/overlays/homelab
-
-  registry:
-    annotations:
-      argocd.argoproj.io/sync-wave: '5'
-    destination:
-      namespace: openshift-image-registry
-    source:
-      path: components/registry-sno/base
-
-  alertmanager:
-    annotations:
-      argocd.argoproj.io/sync-wave: '11'
-    destination:
-      namespace: openshift-monitoring
-    source:
-      path: components/alertmanager/base
 
   rbac:
     annotations:
@@ -80,27 +56,3 @@ applications:
           kind: Policy
           jsonPointers:
           - /spec/rules
-
-  # web-terminal:
-  #   annotations:
-  #     argocd.argoproj.io/sync-wave: '21'
-  #   destination:
-  #     namespace: openshift-operators
-  #   source:
-  #     path: components/web-terminal-operator/base
-
-  defrag-etcd:
-    annotations:
-      argocd.argoproj.io/sync-wave: '99'
-    destination:
-      namespace: openshift-etcd
-    source:
-      path: components/defrag-etcd/base
-
-  cleanup-completed-pods:
-    annotations:
-      argocd.argoproj.io/sync-wave: '99'
-    destination:
-      namespace: clean-completed-pods
-    source:
-      path: components/clean-completed-pods/base
