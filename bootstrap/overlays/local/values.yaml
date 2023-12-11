@@ -6,7 +6,7 @@ default:
     project: cluster-config
     labels:
       app-source: local
-      repo: cluster-config
+      repo: cluster-setting
     destination:
       namespace: openshift-gitops
       name: local-cluster
