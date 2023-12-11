@@ -3,7 +3,7 @@ default:
     enabled: true
     enableAutoSync: true
     autoSyncPrune: false
-    project: cluster-config
+    project: default
     labels:
       app-source: base
       repo: cluster-config
@@ -13,23 +13,6 @@ default:
     source:
       repoURL: https://github.com/rh-bjeon/cluster-setting.git
       targetRevision: HEAD
-
-projects:
-
-  cluster-config:
-    description: Project for overall cluster configuration
-    namespace: openshift-gitops
-    sourceRepos:
-    - https://github.com/rh-bjeon/cluster-setting
-    - https://github.com/redhat-cop/gitops-catalog
-    - https://github.com/gnunn-gitops/acm-hub-bootstrap
-    destinations: |
-      - namespace: '*'
-        server: https://kubernetes.default.svc
-    extraFields: |
-      clusterResourceWhitelist:
-      - group: '*'
-        kind: '*'
 
 applications:
       

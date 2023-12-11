@@ -3,7 +3,7 @@ default:
     enabled: true
     enableAutoSync: true
     autoSyncPrune: false
-    project: cluster-config
+    project: default
     labels:
       app-source: local
       repo: cluster-config

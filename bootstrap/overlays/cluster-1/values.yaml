@@ -3,7 +3,7 @@ default:
     enabled: true
     enableAutoSync: true
     autoSyncPrune: false
-    project: cluster-config
+    project: default
     destination:
       namespace: openshift-gitops
       name: cluster-1
