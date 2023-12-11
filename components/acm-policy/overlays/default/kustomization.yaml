@@ -1,0 +1,7 @@
+namespace: acm-policies
+
+namespace: acm-policies
+
+resources:
+- ../../policies/compliance/base
+- ../../policies/cert-expiration/base

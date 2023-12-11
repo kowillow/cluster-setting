@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: acs-docs
+spec:
+  href: 'https://docs.openshift.com/acs/4.3/welcome/index.html'
+  location: ApplicationMenu
+  text: ACS Docs
+  applicationMenu:
+    section: Red Hat Applications
+    imageURL: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/OpenShift-LogoType.svg'

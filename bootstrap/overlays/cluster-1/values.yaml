@@ -1,0 +1,57 @@
+default:
+  app:
+    enabled: true
+    enableAutoSync: true
+    autoSyncPrune: false
+    project: cluster-config
+    destination:
+      namespace: openshift-gitops
+      name: cluster-1
+    source:
+      repoURL: https://github.com/rh-bjeon/cluster-setting.git
+      targetRevision: HEAD
+
+applications:
+
+  cert-manager-operator:
+    annotations:
+      argocd.argoproj.io/sync-wave: '2'
+    destination:
+      namespace: cert-manager-operator
+    source:
+      path: components/cert-manager-operator/aggregate/overlays/letsencrypt
+
+  authentication:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '4'
+    destination:
+      namespace: openshift-config
+    source:
+      path: components/oauth/overlays/htpass
+
+  banner:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '11'
+    source:
+      path: clusters/overlays/cluster-1/banner
+
+  openshift-monitoring:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '11'
+    destination:
+      namespace: openshift-monitoring
+    source:
+      path: clusters/overlays/cluster-1/components/openshift-monitoring
+
+  web-terminal:
+    project: cluster-config
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+      argocd.argoproj.io/sync-wave: '21'
+    destination:
+      namespace: openshift-operators
+    source:
+      path: components/web-terminal-operator/base

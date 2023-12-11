@@ -1,0 +1,11 @@
+---
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  domain: apps.ocp-cluster01.domain
+  componentRoutes:
+    - name: console
+      namespace: openshift-console
+      hostname: console.apps.ocp-cluster01.domain

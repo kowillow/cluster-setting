@@ -1,0 +1,65 @@
+---
+apiVersion: "logging.openshift.io/v1"
+kind: "ClusterLogging"
+metadata:
+  name: "instance"
+  namespace: "openshift-logging"
+spec:
+  managementState: "Managed"
+  logStore:
+    type: "elasticsearch"
+    retentionPolicy:
+      application:
+        maxAge: 30d
+      infra:
+        maxAge: 30d
+      audit:
+        maxAge: 30d
+    elasticsearch:
+      nodeCount: 3
+      nodeSelector:
+        node-role.kubernetes.io/inframonit: ''
+      tolerations:
+      - effect: "NoSchedule"
+        key: node-role.kubernetes.io/inframonit
+        operator: "Exists"
+      storage:
+        storageClassName: "gp3-csi"
+# WARNING: Same pvc size at the pre env, with 30d at retention time, may be this value needs to be increased
+        size: 450Gi
+      resources: 
+        limits:
+          memory: "16Gi"
+          cpu: 1
+        requests:
+          cpu: 1
+          memory: "16Gi"
+      proxy: 
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+      redundancyPolicy: "SingleRedundancy"
+  visualization:
+    type: "kibana"
+    kibana:
+      replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io/inframonit: ''
+      tolerations:
+      - effect: "NoSchedule"
+        key: node-role.kubernetes.io/inframonit
+        operator: "Exists"
+  collection:
+    logs:
+      type: "fluentd"
+      fluentd:
+        tolerations:
+        - effect: "NoSchedule"
+          key: node-role.kubernetes.io/inframonit
+          operator: "Exists"
+        - effect: "NoSchedule"
+          key: node-role.kubernetes.io/infra
+          operator: "Exists"
+    type: curator

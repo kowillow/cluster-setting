@@ -1,0 +1,8 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: quay
+spec:
+  href: 'https://access.redhat.com/'
+  location: ApplicationMenu
+  text: Red Hat Customer Portal

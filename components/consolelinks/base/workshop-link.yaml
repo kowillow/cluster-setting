@@ -1,0 +1,8 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: workshop-info
+spec:
+  href: 'red.ht/23_MAD_OPS'
+  location: ApplicationMenu
+  text: workshop-info
